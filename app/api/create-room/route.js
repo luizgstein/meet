@@ -1,30 +1,39 @@
-import express from 'express';
+// app/api/create-room/route.js
+
+import { NextResponse } from 'next/server';
 import { RoomServiceClient } from 'livekit-server-sdk';
-import dotenv from 'dotenv';
 
-dotenv.config();
-
-const app = express();
-
+// Inicializa o cliente de administração usando o endpoint REST
 const livekitClient = new RoomServiceClient(
-  process.env.LIVEKIT_WS_URL,
+  process.env.LIVEKIT_API_URL,
   process.env.LIVEKIT_API_KEY,
   process.env.LIVEKIT_API_SECRET
 );
 
-// Usamos GET pois não há payload necessário
-app.get('/api/create-room', async (_req, res) => {
+// Validação das variáveis de ambiente
+if (
+  !process.env.LIVEKIT_API_URL ||
+  !process.env.LIVEKIT_API_KEY ||
+  !process.env.LIVEKIT_API_SECRET
+) {
+  throw new Error(
+    'Missing LiveKit configuration: LIVEKIT_API_URL, LIVEKIT_API_KEY or LIVEKIT_API_SECRET'
+  );
+}
+
+// Handler para GET /api/create-room
+export async function GET() {
   try {
     const room = await livekitClient.createRoom({
       name: `room-${Date.now()}`,
       recordParticipantsOnConnect: true,
     });
-    res.json({ roomId: room.name, roomSid: room.sid });
+    return NextResponse.json({ roomId: room.name, roomSid: room.sid });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
+    console.error('create-room error:', err);
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : 'Unknown error' },
+      { status: 500 }
+    );
   }
-});
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+}
