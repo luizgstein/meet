@@ -8,7 +8,8 @@ import {
 } from '@livekit/components-react';
 import { BackgroundBlur, VirtualBackground } from '@livekit/track-processors';
 import { isLocalTrack, LocalTrackPublication, Track } from 'livekit-client';
-
+import Desk from '../public/background-images/3-escudo.jpeg';
+import Nature from '../public/background-images/back2.png';
 
 // Background image paths
 const BACKGROUND_IMAGES = [
