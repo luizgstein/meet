@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-app.use(express.json());
 
 const livekitClient = new RoomServiceClient(
   process.env.LIVEKIT_WS_URL,
@@ -13,14 +12,13 @@ const livekitClient = new RoomServiceClient(
   process.env.LIVEKIT_API_SECRET
 );
 
-app.post('/api/create-room', async (req, res) => {
+// Usamos GET pois não há payload necessário
+app.get('/api/create-room', async (_req, res) => {
   try {
-    // Cria sala com gravação automática
     const room = await livekitClient.createRoom({
       name: `room-${Date.now()}`,
       recordParticipantsOnConnect: true,
     });
-    // Retorna informações da sala
     res.json({ roomId: room.name, roomSid: room.sid });
   } catch (err) {
     console.error(err);
