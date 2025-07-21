@@ -1,39 +1,38 @@
-// app/api/create-room/route.js
-
+// app/api/create-room/route.ts
 import { NextResponse } from 'next/server';
 import { RoomServiceClient } from 'livekit-server-sdk';
 
-// Inicializa o cliente de administração usando o endpoint REST
-const livekitClient = new RoomServiceClient(
-  process.env.LIVEKIT_API_URL,
-  process.env.LIVEKIT_API_KEY,
-  process.env.LIVEKIT_API_SECRET
-);
+// Extrai variáveis de ambiente
+const { LIVEKIT_API_URL, LIVEKIT_API_KEY, LIVEKIT_API_SECRET } = process.env;
 
-// Validação das variáveis de ambiente
-if (
-  !process.env.LIVEKIT_API_URL ||
-  !process.env.LIVEKIT_API_KEY ||
-  !process.env.LIVEKIT_API_SECRET
-) {
+// Verifica configuração
+if (!LIVEKIT_API_URL || !LIVEKIT_API_KEY || !LIVEKIT_API_SECRET) {
   throw new Error(
     'Missing LiveKit configuration: LIVEKIT_API_URL, LIVEKIT_API_KEY or LIVEKIT_API_SECRET'
   );
 }
 
-// Handler para GET /api/create-room
+// Inicializa cliente REST do LiveKit
+const livekitClient = new RoomServiceClient(
+  LIVEKIT_API_URL,
+  LIVEKIT_API_KEY,
+  LIVEKIT_API_SECRET
+);
+
+// Handler GET /api/create-room
 export async function GET() {
   try {
-    const room = await livekitClient.createRoom({
+    const opts = {
       name: `room-${Date.now()}`,
       recordParticipantsOnConnect: true,
-    });
+      emptyTimeout: 10 * 60,   // 10 minutos
+      maxParticipants: 20,     // limite de participantes
+    };
+    const room = await livekitClient.createRoom(opts);
     return NextResponse.json({ roomId: room.name, roomSid: room.sid });
-  } catch (err) {
-    console.error('create-room error:', err);
-    return NextResponse.json(
-      { error: err instanceof Error ? err.message : 'Unknown error' },
-      { status: 500 }
-    );
+  } catch (error) {
+    console.error('create-room error:', error);
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
