@@ -1,3 +1,7 @@
+
+import { NextResponse } from 'next/server';
+import { AccessToken, RoomGrant } from 'livekit-server-sdk';
+
 const apiKey = process.env.LIVEKIT_API_KEY;
    const apiSecret = process.env.LIVEKIT_API_SECRET;
    if (!apiKey || !apiSecret) {
