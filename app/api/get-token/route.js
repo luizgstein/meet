@@ -1,6 +1,6 @@
 
 import { NextResponse } from 'next/server';
-import { AccessToken, RoomGrant } from 'livekit-server-sdk';
+import { AccessToken } from 'livekit-server-sdk';
 
 const apiKey = process.env.LIVEKIT_API_KEY;
    const apiSecret = process.env.LIVEKIT_API_SECRET;
@@ -8,26 +8,19 @@ const apiKey = process.env.LIVEKIT_API_KEY;
      throw new Error('Missing LiveKit API_KEY or API_SECRET');
    }
 
-   export async function POST(request) {
-     try {
-       const { roomId, userId, role } = await request.json();
-       if (!roomId || !userId || !['host','participant'].includes(role)) {
-         return NextResponse.json(
-           { error: 'Invalid roomId, userId or role' },
-           { status: 400 }
-         );
-       }
+ export async function POST(request) {
+  const { roomId, userId, role } = await request.json();
 
-       const at = new AccessToken(apiKey, apiSecret, { identity: userId });
-       const grant = new RoomGrant({ room: roomId, roomJoin: true, canSubscribe: true, canPublish: role === 'host' });
-       at.addGrant(grant);
-       at.ttl = 60 * 60 * 24;  // 24 horas
+  const at = new AccessToken(apiKey, apiSecret, { identity: userId });
+  // Passamos as permissões direto como objeto:
+  at.addGrant({
+    room: roomId,
+    roomJoin: true,
+    canSubscribe: true,
+    canPublish: role === 'host',
+  });
+  at.ttl = 60 * 60 * 24;
 
-       const token = await at.toJwt();
-       return NextResponse.json({ token });
-     } catch (error) {
-       console.error('get-token error:', error);
-       const message = error instanceof Error ? error.message : 'Unknown error';
-       return NextResponse.json({ error: message }, { status: 500 });
-     }
-   }
+  const token = await at.toJwt();
+  return NextResponse.json({ token });
+}
