@@ -33,12 +33,15 @@ function Tabs(props: React.PropsWithChildren<{}>) {
   });
 
   return (
-    <div className={styles.tabContainer}>
-      <div className={styles.tabSelect}>{tabs}</div>
-      {/* @ts-ignore */}
-      {props.children[tabIndex]}
-    </div>
-  );
+  <div className={styles.tabContainer}>
+    {/* Removido visualmente o seletor de tabs, mas a lógica continua funcionando */}
+    {/* <div className={styles.tabSelect}>{tabs}</div> */}
+    
+    {/* @ts-ignore */}
+    {props.children[tabIndex]}
+  </div>
+);
+
 }
 
 function DemoMeetingTab(props: { label: string }) {
@@ -56,18 +59,9 @@ function DemoMeetingTab(props: { label: string }) {
     <div className={styles.tabContent}>
       <p style={{ margin: 0 }}>Inicie uma reunião agora</p>
       <button style={{ marginTop: '1rem' }} className="lk-button" onClick={startMeeting}>
-        Start Meeting
+        Nova reunião
       </button>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
-          <input
-            id="use-e2ee"
-            type="checkbox"
-            checked={e2ee}
-            onChange={(ev) => setE2ee(ev.target.checked)}
-          ></input>
-          <label htmlFor="use-e2ee">Enable end-to-end encryption</label>
-        </div>
         {e2ee && (
           <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
             <label htmlFor="passphrase">Passphrase</label>
@@ -165,17 +159,12 @@ export default function Page() {
     <>
       <main className={styles.main} data-lk-theme="default">
         <div className="header">
-          <img src="/images/livekit-meet-home.svg" alt="LiveKit Meet" width="360" height="45" />
+          <img src="/images/ovt-meet.svg" alt="OVT Meet" width="360" height="45" />
           <h2>
-            Open source video conferencing app built on{' '}
-            <a href="https://github.com/livekit/components-js?ref=meet" rel="noopener">
-              LiveKit&nbsp;Components
+            Plataforma oficial de reuniões da{' '}
+            <a href="https://www.overtimeacademy.com.br/" rel="noopener">
+              Overtime&nbsp;Academy
             </a>
-            ,{' '}
-            <a href="https://livekit.io/cloud?ref=meet" rel="noopener">
-              LiveKit&nbsp;Cloud
-            </a>{' '}
-            and Next.js.
           </h2>
         </div>
         <Suspense fallback="Loading">
@@ -186,13 +175,13 @@ export default function Page() {
         </Suspense>
       </main>
       <footer data-lk-theme="default">
-        Hosted on{' '}
-        <a href="https://livekit.io/cloud?ref=meet" rel="noopener">
-          LiveKit Cloud
+        Instagram{' '}
+        <a href="https://instagram.com.br/ovtacademy" rel="noopener">
+          @ovtacademy
         </a>
-        . Source code on{' '}
+        . Website{' '}
         <a href="https://github.com/livekit/meet?ref=meet" rel="noopener">
-          GitHub
+          ovtacademy.com.br
         </a>
         .
       </footer>
