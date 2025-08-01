@@ -76,6 +76,10 @@ export function PageClientImpl(props: {
             defaults={preJoinDefaults}
             onSubmit={handlePreJoinSubmit}
             onError={handlePreJoinError}
+            joinLabel="Entrar na reunião"
+            micLabel="Microfone"
+            camLabel="Câmera"
+            userLabel="Seu nome"
           />
         </div>
       ) : (
