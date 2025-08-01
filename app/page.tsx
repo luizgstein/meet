@@ -162,7 +162,7 @@ export default function Page() {
           <img src="/images/ovt-meet.svg" alt="OVT Meet" width="360" height="45" />
           <h2>
             Plataforma oficial de reuniões da{' '}
-            <a href="https://www.overtimeacademy.com.br/" rel="noopener">
+            <a href="https://www.overtimeacademy.com.br/" rel="noopener" target="_blank">
               Overtime&nbsp;Academy
             </a>
           </h2>

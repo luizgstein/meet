@@ -38,3 +38,14 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 0.5rem;
 }
+
+.lk-button {
+  background-color: #425DFF; /* cor de fundo */
+  color: #fff;               /* cor do texto */
+  border: none;              /* remove borda (opcional) */
+}
+
+.lk-button:hover {
+  background-color: #7185FF; /* cor no hover (opcional) */
+}
+
