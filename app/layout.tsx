@@ -6,18 +6,18 @@ import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: {
-    default: 'LiveKit Meet | Conference app build with LiveKit open source',
+    default: 'OVT Meet | Plataforma oficial de reuniões da Overtime Academy',
     template: '%s',
   },
   description:
-    'LiveKit is an open source WebRTC project that gives you everything needed to build scalable and real-time audio and/or video experiences in your applications.',
+    'OVT Meet é a plataforma oficial da Overtime Academy para reuniões e avaliações por vídeo, construída com tecnologia em tempo real, segura e escalável para conectar atletas, avaliadores e franqueados.',
   twitter: {
-    creator: '@livekitted',
-    site: '@livekitted',
+    creator: '@ovtacademy',
+    site: '@ovtacademy',
     card: 'summary_large_image',
   },
   openGraph: {
-    url: 'https://meet.livekit.io',
+    url: 'https://overtimeacademy.com.br',
     images: [
       {
         url: 'https://meet.livekit.io/images/livekit-meet-open-graph.png',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
         type: 'image/png',
       },
     ],
-    siteName: 'LiveKit Meet',
+    siteName: 'OVT Meet',
   },
   icons: {
     icon: {
